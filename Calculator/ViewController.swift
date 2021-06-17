@@ -10,9 +10,9 @@ import UIKit
 class ViewController: UIViewController {
     
     private var result = ""
-    private var output = ""
-    private var var1 = ""
-    private var var2 = ""
+    private var output: String? = ""
+    private var varArr = [Int]()
+    private var oper = ""
     
     @IBOutlet weak var labelOutput: UILabel!
 
@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func btnClear(_ sender: Any) {
+        varArr = []
         result = "0"
         changeOutputLabel(result: result)
     }
@@ -56,20 +57,11 @@ class ViewController: UIViewController {
     
     
     @IBAction func btnPlus(_ sender: Any) {
-        if(var1 == ""){
-            var1 = result
+        if(result != ""){
+            varArr.append(Int(result) ?? 0)
             result = ""
-            labelOutput.text = "0"
-        } else if (var2 == "") {
-            var1 = result
-            result = ""
-            labelOutput.text = "0"
-        } else {
-            result = ""
-            labelOutput.text = "0"
         }
-        
-        
+        oper = "+"
     }
     
     
@@ -78,8 +70,20 @@ class ViewController: UIViewController {
     
     
     @IBAction func btnResult(_ sender: Any) {
-        let temp:Int? = Int(var1)! + Int(var2)!
-        output = String(temp!)
+        if(result != ""){
+            varArr.append(Int(result) ?? 0)
+        }
+      
+        if(oper == "+"){
+            result = String(varArr.reduce(0,+))
+        } if(oper == "-"){
+            result = String(varArr.reduce(0,+))
+        } else {
+            return
+        }
+        oper = ""
+        varArr = []
+                
         changeOutputLabel(result: result)
     }
     
